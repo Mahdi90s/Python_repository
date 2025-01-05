@@ -86,7 +86,7 @@ from sklearn.datasets import load_iris
 # ax.axis('equal') # equal is a key word that make sure pie as a cyrcle 
 # st.pyplot(plot_pie)
 #-------------------------------------------------------------------------------
-## Create statistical charts
+# Create statistical charts
 
 iris_data = load_iris()
 data = pd.DataFrame(iris_data.data, columns = iris_data.feature_names)
@@ -106,9 +106,8 @@ fig = plt.figure()
 sns.scatterplot(data=data)
 st.pyplot(fig)
     
-    
-    
-    
+
+
     
     
     
