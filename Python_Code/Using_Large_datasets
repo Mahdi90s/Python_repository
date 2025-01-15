@@ -1,0 +1,25 @@
+# %%
+import pandas as pd
+
+address = "/home/micheal/Documents/GitHub/Streamlit_Resume/MY_RESUME/using-large-datasets-with-pandas-4467955/data/yellow_tripdata_2021-02.parquet"
+
+df = pd.read_parquet(address)
+# %%
+mb = 1_000_000
+df.memory_usage(deep=True).sum() / mb
+# %%
+from pathlib import Path
+
+Path(address).stat().st_size / mb
+# %%
+df.groupby ('VendorID')['trip_distance'].median()
+
+# %%
+df.columns
+# %%
+columns = ['VendorID', 'trip_distance']
+df = pd.read_parquet(address, columns=columns)
+df.memory_usage(deep=True).sum() / mb
+# %%
+df.groupby ('VendorID')['trip_distance'].median()
+# %%
