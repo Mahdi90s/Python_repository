@@ -1,0 +1,133 @@
+mport numpy as np
+
+class neuron:
+    def __init__(self):
+        self.bais = 0
+    def activation(self, z):
+        return 1 / (1 + np.exp(-0.5 * z))
+    def forward(self, inputs):
+        return self.activation(inputs)
+    
+    
+x1 = 1
+x2 = 2
+
+weights = {
+    'w_x1_h1': 0.1,
+    'w_x1_h2': 0.2,
+    'w_x2_h1': 0.3,
+    'w_x2_h2': 0.4
+}
+print ("inputs", x1,x2)
+print ("Weights", weights)
+
+h1_input = (x1 * weights['w_x1_h1'] + x1 * weights['w_x2_h1'])
+h2_input = (x1 * weights['w_x1_h2'] + x1 * weights['w_x2_h2'])
+
+print (h1_input)
+print (h2_input)
+
+
+ef sigmoid(z):
+    return 1 / (1 + np.exp(-0.5 * z))
+
+h1_output = sigmoid(h1_input)
+h2_output = sigmoid(h2_input)
+
+print ('h1_output:', h1_output)
+print ('h2_output:', h2_output)
+
+
+w_h1y1 = 0.1
+w_h1y2 = 0.2
+w_h2y1 = 0.3
+w_h2y2 = 0.4
+
+y1_input = (h1_output * w_h1y1) + (h2_output * w_h2y1)
+y2_input = (h1_output * w_h1y2) + (h2_output * w_h2y2)
+
+print ("y1 input:", y1_input)
+print ("y2 input:", y2_input)
+
+
+y1_actual = 0
+y2_actual = 1
+
+y1_predicted = y1_input
+y2_predicted = y2_input
+
+error1 = y1_actual - y1_predicted
+error2 = y2_actual - y2_predicted
+
+mse = 0.5 * (error1**2 + error2**2)
+
+print("Error for y1:", error1)
+print("Error for y2:", error2)
+print ("Mean Squard Error:", mse)
+
+
+u = 0.8
+
+Gradients = {
+    'g1' : u * error1 * (y1_input * (1 - y1_input)), 
+    'g2' : u * error2 * (y2_input * (1 - y2_input))
+}
+for gradient in Gradients:
+    print (f"{gradient}: {Gradients[gradient]}")
+
+
+#New Weight
+new_weights = {
+'n_w_h1y1' : u * Gradients['g1'] * h1_output,
+'n_w_h1y2' : u * Gradients['g1'] * h2_output,
+'n_w_h2y1' : u * Gradients['g2'] * h1_output,
+'n_w_h2y2' : u * Gradients['g2'] * h2_output
+}
+for new_weight in new_weights:
+    print (f"{new_weight}: {new_weights[new_weight]}")
+
+
+
+# Update the Weight 
+U_new_weights = {
+'u_n_w_h1y1' : new_weights['n_w_h1y1'] + w_h1y1,
+'u_n_w_h1y2' : new_weights['n_w_h1y2'] + w_h1y2,
+'u_n_w_h2y1' : new_weights['n_w_h2y1'] + w_h2y1,
+'u_n_w_h2y2' : new_weights['n_w_h2y2'] + w_h2y2
+}
+for u_new_weight in U_new_weights:
+    print (f"{u_new_weight}: {U_new_weights[u_new_weight]}")
+    
+    
+    
+u = 0.8
+g_hiddens = {
+'g_h1' : u * (h1_input * (1 - h1_input)) * ((Gradients['g1'] * w_h1y1) + (Gradients['g1'] * w_h1y2)),
+'g_h2' : u * (h2_input * (1 - h2_input)) * ((Gradients['g2'] * w_h2y1) + (Gradients['g2'] * w_h2y2))
+}
+for g_hidden in g_hiddens:
+    print (f"{g_hidden}: {g_hiddens[g_hidden]}")
+    
+    
+#New Weight between input and hidden
+n_weights_IH = {
+'n_w_x1_h1' : u * Gradients['g1'] * h1_input,
+'n_w_x1_h2' : u * Gradients['g1'] * h2_input,
+'n_w_x2_h1' : u * Gradients['g2'] * h1_input,
+'n_w_x2_h2' : u * Gradients['g2'] * h2_input
+}
+
+for n_weight_IH in n_weights_IH:
+    print(f"{n_weight_IH}: {n_weights_IH[n_weight_IH]}")
+    
+    
+    
+# Update weight 
+
+update_weighs = {}
+
+for key, n_w_value in n_weight_IH.items():
+    weight_key = key.replace('n_', '')
+    update_weight[f'u_{key}'] = n_weight_IH + weights[weight_key]
+
+print(update_wihs)

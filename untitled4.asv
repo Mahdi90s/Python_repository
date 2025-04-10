@@ -1,0 +1,5 @@
+data = readtable('ce889_dataCollection.csv');
+
+data
+
+input_data = data(:, 1:2)
